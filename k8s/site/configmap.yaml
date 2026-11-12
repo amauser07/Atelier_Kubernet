@@ -12,7 +12,6 @@ data:
       <head><meta charset="utf-8"><title>Mon site sur Kubernetes</title></head>
       <body>
         <h1>Bienvenue sur mon site</h1>
-        <!-- TODO : personnalisez la page (votre nom, votre groupe...) -->
         <p>Amandine Blanchard – ING2-APP-RS2 – EFREI Paris</p>
       </body>
     </html>

@@ -1,5 +1,4 @@
 # Exercice 4 — Le Deployment de votre site.
-# Remplacez chaque TODO, puis : kubectl apply -f k8s/site/
 # Aide : kubectl explain deployment.spec.template.spec.containers
 apiVersion: apps/v1
 kind: Deployment
@@ -22,10 +21,14 @@ spec:
           image: nginx:1.28        # utilisez nginx:1.27 (version précise, pas "latest")
           ports:
             - containerPort: 80    # le port sur lequel nginx écoute
-          volumeMounts:
-            - name: html
-              mountPath: /usr/share/nginx/html   # le dossier servi par nginx (cf. exercice 3)
-      volumes:
-        - name: html
-          configMap:
-            name: site-html        # le nom de la ConfigMap de configmap.yaml
+          readinessProbe:          # Bonus B : trafic envoyé seulement aux pods prêts
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 2
+            periodSeconds: 5
+          resources:               # Bonus B : ressources réservées / maximum
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:

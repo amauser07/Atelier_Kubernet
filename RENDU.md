@@ -59,7 +59,13 @@
 ## Bonus (facultatif)
 
 14. Bonus réalisés et remarques :
-    >
+    > Bonus A : j'ai complété ingress.yaml  et je l'ai appliqué. Le site est accessible sur le port 8081 sans port-forward,
+    > via Traefik. Après kubectl delete pod -l app=site le site reste accessible : l'Ingress envoie le trafic au Service, qui suit automatiquement les nouveaux pods grâce aux labels, alors que le port-forward était lié à un pod précis.
+
+    > Bonus B : j'ai ajouté une readinessProbe HTTP sur / et des requests/limits.Avec /nope nginx répond 404 donc la probe échoue : le nouveau pod reste en 0/1 Running et ne reçoit pas de trafic.
+    > Le rolling update se bloque, mais les anciens pods continuent de servir le site
+
+    > Bonus C :drain a marqué agent-0 en SchedulingDisabled et a expulsé ses pods, que les ReplicaSets ont recréés sur les autres nœuds. Après uncordon, les pods ne reviennent pas tout seuls : le nœud accepte à nouveau de nouveaux pods, mais Kubernetes ne déplace pas des pods qui tournent déjà. 
 
 ---
 
